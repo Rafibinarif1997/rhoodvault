@@ -3,30 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#020814">
+<meta name="theme-color" content="#020711">
 
 <title>RHOODVAULT</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-:root{
-    --bg:#020711;
-    --panel:#061426;
-    --panel2:#091d35;
-    --blue:#159cff;
-    --blue2:#006cff;
-    --cyan:#61dcff;
-    --white:#ecf9ff;
-    --muted:#7698b3;
-    --line:#123b60;
-    --glow:0 0 25px rgba(0,150,255,.45);
-}
-
 *{
+    box-sizing:border-box;
     margin:0;
     padding:0;
-    box-sizing:border-box;
+}
+
+:root{
+    --bg:#020711;
+    --blue:#0798ff;
+    --cyan:#57ddff;
+    --dark:#061426;
+    --line:#124b78;
+    --text:#e9f8ff;
+    --muted:#7698b2;
 }
 
 html{
@@ -35,52 +32,53 @@ html{
 
 body{
     background:
-        radial-gradient(circle at 50% -10%,#0b3768 0%,#041225 30%,#020711 70%);
-    color:var(--white);
+    radial-gradient(circle at 50% -20%,#0a3c70,#020711 55%);
+    color:var(--text);
     font-family:Arial,sans-serif;
     min-height:100vh;
     overflow-x:hidden;
 }
 
 /* PIXEL GRID */
-body::before{
+
+body:before{
     content:"";
     position:fixed;
     inset:0;
-    z-index:-2;
-    pointer-events:none;
+    z-index:-5;
     background-image:
-        linear-gradient(rgba(0,145,255,.07) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(0,145,255,.07) 1px,transparent 1px);
+        linear-gradient(rgba(0,145,255,.06) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(0,145,255,.06) 1px,transparent 1px);
     background-size:32px 32px;
+    pointer-events:none;
 }
 
 /* SCANLINES */
-body::after{
+
+body:after{
     content:"";
     position:fixed;
     inset:0;
-    z-index:100;
+    z-index:9999;
     pointer-events:none;
-    opacity:.08;
+    opacity:.045;
     background:
-        repeating-linear-gradient(
-            0deg,
-            transparent 0px,
-            transparent 3px,
-            #42caff 4px
-        );
+    repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        #4acbff 4px
+    );
 }
 
 /* ================= NAVBAR ================= */
 
-.nav{
+.navbar{
     position:sticky;
     top:0;
-    z-index:999;
-    width:100%;
-    background:rgba(2,7,17,.92);
-    border-bottom:1px solid #124a76;
+    z-index:1000;
+    background:rgba(2,7,17,.94);
+    border-bottom:1px solid var(--line);
     backdrop-filter:blur(15px);
 }
 
@@ -88,62 +86,64 @@ body::after{
     max-width:1200px;
     height:76px;
     margin:auto;
-    padding:0 24px;
+    padding:0 22px;
 
     display:flex;
     align-items:center;
     justify-content:space-between;
-    gap:20px;
 }
 
 .logo{
-    color:white;
-    text-decoration:none;
     font-family:'Press Start 2P',monospace;
+    color:white;
     font-size:16px;
-    white-space:nowrap;
+    cursor:pointer;
     text-shadow:
-        0 0 5px #fff,
-        0 0 15px #009dff;
+    0 0 8px #fff,
+    0 0 20px #008cff;
+    white-space:nowrap;
 }
 
 .logo span{
     color:var(--blue);
 }
 
-/* DESKTOP MENU */
+/* DESKTOP NAV */
 
 .nav-links{
     display:flex;
     align-items:center;
-    gap:22px;
+    gap:20px;
 }
 
 .nav-links a{
-    color:#8eafc5;
+    color:#8caec5;
     text-decoration:none;
     font-family:'Press Start 2P',monospace;
     font-size:8px;
+    cursor:pointer;
     transition:.2s;
 }
 
-.nav-links a:hover{
+.nav-links a:hover,
+.nav-links a.active{
     color:var(--cyan);
-    text-shadow:0 0 12px #00aaff;
+    text-shadow:0 0 12px #009dff;
 }
 
 /* BUTTON */
 
 .btn{
-    border:1px solid #159cff;
-    background:linear-gradient(
+    border:1px solid #159eff;
+    background:
+    linear-gradient(
         180deg,
-        #0879c4,
-        #034477
+        #087ac5,
+        #034676
     );
 
     color:white;
-    padding:14px 18px;
+    padding:14px 17px;
 
     font-family:'Press Start 2P',monospace;
     font-size:8px;
@@ -162,8 +162,7 @@ body::after{
     );
 
     box-shadow:
-        inset 0 0 12px rgba(100,220,255,.15),
-        0 0 15px rgba(0,130,255,.25);
+    0 0 18px rgba(0,140,255,.3);
 
     transition:.2s;
 }
@@ -171,10 +170,10 @@ body::after{
 .btn:hover{
     transform:translateY(-2px);
     box-shadow:
-        0 0 20px rgba(0,160,255,.65);
+    0 0 25px rgba(0,170,255,.7);
 }
 
-/* MOBILE MENU BUTTON */
+/* MOBILE MENU */
 
 .menu-btn{
     display:none;
@@ -191,81 +190,50 @@ body::after{
 
     text-align:center;
 
+    padding:70px 20px;
+
     position:relative;
-
-    padding:80px 20px;
-
-    overflow:hidden;
-}
-
-.hero-glow{
-    position:absolute;
-
-    width:500px;
-    height:500px;
-
-    border-radius:50%;
-
-    background:#008cff22;
-
-    filter:blur(70px);
-
-    animation:heroPulse 4s infinite;
-}
-
-@keyframes heroPulse{
-    0%,100%{
-        transform:scale(1);
-        opacity:.5;
-    }
-
-    50%{
-        transform:scale(1.25);
-        opacity:.8;
-    }
 }
 
 .hero-content{
-    position:relative;
-    z-index:2;
+    width:100%;
     max-width:900px;
 }
 
 .eyebrow{
+    color:var(--cyan);
     font-family:'Press Start 2P',monospace;
     font-size:9px;
-    color:var(--cyan);
     letter-spacing:2px;
-    margin-bottom:25px;
+    line-height:1.8;
 }
 
 .hero h1{
+    margin:25px 0;
+
     font-family:'Press Start 2P',monospace;
 
-    font-size:clamp(32px,7vw,76px);
+    font-size:clamp(28px,7vw,70px);
 
-    line-height:1.25;
-
-    margin-bottom:30px;
+    line-height:1.3;
 
     text-shadow:
-        0 0 7px #fff,
-        0 0 25px #008cff;
+    0 0 7px white,
+    0 0 25px #008cff;
 }
 
 .hero h1 span{
-    color:#23b5ff;
+    color:#20b6ff;
 }
 
 .hero p{
-    max-width:720px;
+    max-width:700px;
     margin:0 auto 35px;
 
-    color:#8aaec7;
-
-    line-height:1.9;
+    color:#86a9c0;
 
     font-size:16px;
+    line-height:1.9;
 }
 
 .hero-buttons{
@@ -275,13 +243,23 @@ body::after{
     flex-wrap:wrap;
 }
 
-/* ================= PIXEL VAULT ================= */
+/* ================= VAULT ================= */
 
 .vault{
-    width:220px;
-    height:220px;
+    width:190px;
+    height:190px;
 
-    margin:50px auto;
+    margin:45px auto;
+
+    background:
+    radial-gradient(circle,#0c4778,#041322 65%);
+
+    border:8px solid #118dd3;
+
+    box-shadow:
+    0 0 0 6px #062b48,
+    0 0 0 10px #0b5a89,
+    0 0 45px #008cffaa;
 
     display:flex;
     align-items:center;
@@ -289,59 +267,36 @@ body::after{
 
     position:relative;
 
-    background:
-        linear-gradient(135deg,#0b3153,#041321);
-
-    border:5px solid #128fe0;
-
-    box-shadow:
-        0 0 0 8px #06223b,
-        0 0 0 12px #0a527f,
-        0 0 50px #008cff88;
-
-    animation:vaultFloat 4s ease-in-out infinite;
+    animation:float 4s ease-in-out infinite;
 }
 
-.vault::before{
+.vault:before{
     content:"";
 
     position:absolute;
     inset:22px;
 
-    border:4px dashed #58d8ff;
+    border:4px dashed var(--cyan);
+
+    border-radius:50%;
 
     animation:spin 8s linear infinite;
 }
 
-.vault::after{
+.vault:after{
     content:"";
 
-    width:30px;
-    height:70px;
+    width:10px;
+    height:65px;
 
-    background:#53d9ff;
+    background:#61ddff;
 
-    box-shadow:
-        0 0 20px #00aaff,
-        0 0 50px #008cff;
+    box-shadow:0 0 20px #00aaff;
 
-    clip-path:polygon(
-        35% 0,
-        65% 0,
-        65% 45%,
-        100% 45%,
-        100% 60%,
-        65% 60%,
-        65% 100%,
-        35% 100%,
-        35% 60%,
-        0 60%,
-        0 45%,
-        35% 45%
-    );
+    position:absolute;
 }
 
-@keyframes vaultFloat{
+@keyframes float{
     0%,100%{
         transform:translateY(0);
     }
@@ -357,6 +312,235 @@ body::after{
     }
 }
 
+/* ================= PAGE ================= */
+
+.page{
+    max-width:1200px;
+    margin:auto;
+    padding:70px 22px;
+    min-height:calc(100vh - 76px);
+}
+
+.page-title{
+    font-family:'Press Start 2P',monospace;
+    font-size:26px;
+    margin:12px 0 18px;
+}
+
+.page-description{
+    color:var(--muted);
+    line-height:1.8;
+    margin-bottom:35px;
+}
+
+/* ================= GRID ================= */
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.card{
+    background:
+    linear-gradient(
+        145deg,
+        rgba(7,27,48,.95),
+        rgba(2,10,20,.95)
+    );
+
+    border:1px solid var(--line);
+
+    padding:22px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    box-shadow:
+    0 0 20px rgba(0,100,180,.08);
+
+    transition:.25s;
+}
+
+.card:hover{
+    border-color:#169fe9;
+    box-shadow:
+    0 0 25px rgba(0,150,255,.25);
+    transform:translateY(-3px);
+}
+
+.card h3{
+    font-family:'Press Start 2P',monospace;
+    font-size:12px;
+    margin:14px 0;
+}
+
+.card p{
+    color:var(--muted);
+    line-height:1.7;
+}
+
+.tag{
+    display:inline-block;
+
+    font-family:'Press Start 2P',monospace;
+    font-size:7px;
+
+    color:var(--cyan);
+
+    border:1px solid #15557e;
+
+    padding:7px 9px;
+}
+
+/* MINI VAULT */
+
+.mini-vault{
+    height:190px;
+
+    background:
+    radial-gradient(circle,#0b426d,#030b15);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    margin:-22px -22px 20px;
+}
+
+.mini-vault div{
+    width:105px;
+    height:105px;
+
+    border:7px solid #138fd4;
+
+    border-radius:50%;
+
+    box-shadow:
+    0 0 30px #008cff88,
+    inset 0 0 25px #008cff55;
+}
+
+/* ================= STATS ================= */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin-top:20px;
+}
+
+.stat{
+    background:#04101e;
+    border:1px solid var(--line);
+    padding:20px;
+}
+
+.stat b{
+    display:block;
+    font-family:'Press Start 2P',monospace;
+    font-size:15px;
+    color:var(--cyan);
+    margin-bottom:10px;
+}
+
+.stat small{
+    color:var(--muted);
+}
+
+/* ================= TABLE ================= */
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:650px;
+}
+
+th,td{
+    padding:18px;
+    border-bottom:1px solid var(--line);
+    text-align:left;
+}
+
+th{
+    color:var(--cyan);
+    font-family:'Press Start 2P',monospace;
+    font-size:8px;
+}
+
+td{
+    color:#9db8ca;
+}
+
+/* ================= PROGRESS ================= */
+
+.progress{
+    height:10px;
+    background:#020810;
+    border:1px solid var(--line);
+    margin:12px 0 20px;
+}
+
+.progress span{
+    display:block;
+    height:100%;
+
+    background:
+    linear-gradient(
+        90deg,
+        #006eff,
+        #58ddff
+    );
+
+    box-shadow:0 0 15px #008cff;
+}
+
+/* ================= FOOTER ================= */
+
+.footer{
+    border-top:1px solid var(--line);
+
+    padding:30px 20px;
+
+    text-align:center;
+
+    color:#52738c;
+
+    font-size:10px;
+
+    font-family:'Press Start 2P',monospace;
+
+    line-height:2;
+}
+
+/* ================= TOAST ================= */
+
+.toast{
+    position:fixed;
+
+    right:20px;
+    bottom:20px;
+
+    background:#06213a;
+
+    border:1px solid #159eff;
+
+    padding:15px 18px;
+
+    font-size:12px;
+
+    box-shadow:0 0 25px #008cff55;
+
+    display:none;
+
+    z-index:99999;
+}
+
 /* ================= MOBILE ================= */
 
 @media(max-width:900px){
@@ -367,12 +551,11 @@ body::after{
     }
 
     .logo{
-        font-size:12px;
+        font-size:11px;
     }
 
     .menu-btn{
         display:block;
-        padding:12px 14px;
     }
 
     .nav-links{
@@ -387,49 +570,30 @@ body::after{
         display:none;
 
         flex-direction:column;
+
         align-items:stretch;
 
         gap:0;
 
-        background:
-            linear-gradient(
-                180deg,
-                #061526,
-                #020711
-            );
-
-        border-bottom:1px solid #123b60;
-
         padding:10px 16px 18px;
 
-        box-shadow:0 20px 40px rgba(0,0,0,.5);
+        background:#030b17;
+
+        border-bottom:1px solid var(--line);
+
+        box-shadow:0 20px 40px rgba(0,0,0,.6);
     }
 
-    .nav-links.active{
+    .nav-links.open{
         display:flex;
-        animation:menuOpen .2s ease;
-    }
-
-    @keyframes menuOpen{
-        from{
-            opacity:0;
-            transform:translateY(-10px);
-        }
-
-        to{
-            opacity:1;
-            transform:translateY(0);
-        }
     }
 
     .nav-links a{
-        width:100%;
-
-        padding:18px 12px;
+        padding:18px 10px;
 
         border-bottom:1px solid #10334f;
 
-        font-size:9px;
+        font-size:8px;
     }
 
     .nav-links .btn{
@@ -439,27 +603,25 @@ body::after{
 
     .hero{
         min-height:calc(100vh - 68px);
-        padding:55px 18px;
+        padding:45px 17px;
     }
 
     .eyebrow{
         font-size:7px;
-        line-height:1.7;
     }
 
     .hero h1{
-        font-size:clamp(25px,9vw,45px);
+        font-size:clamp(23px,8vw,42px);
     }
 
     .hero p{
         font-size:14px;
-        line-height:1.8;
     }
 
     .hero-buttons{
         flex-direction:column;
         width:100%;
-        max-width:360px;
+        max-width:350px;
         margin:auto;
     }
 
@@ -468,35 +630,39 @@ body::after{
     }
 
     .vault{
-        width:170px;
-        height:170px;
-        margin:35px auto;
+        width:150px;
+        height:150px;
+        margin:30px auto;
     }
 
-    .vault::before{
-        inset:17px;
+    .grid{
+        grid-template-columns:1fr;
     }
 
-    .vault::after{
-        height:52px;
-        width:24px;
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .page{
+        padding:50px 17px;
+    }
+
+    .page-title{
+        font-size:20px;
+        line-height:1.5;
     }
 }
 
-/* SMALL PHONES */
+/* SMALL MOBILE */
 
 @media(max-width:420px){
 
     .logo{
-        font-size:10px;
-    }
-
-    .hero{
-        padding:45px 15px;
+        font-size:9px;
     }
 
     .hero h1{
-        font-size:24px;
+        font-size:22px;
     }
 
     .hero p{
@@ -504,199 +670,1092 @@ body::after{
     }
 
     .vault{
-        width:145px;
-        height:145px;
+        width:130px;
+        height:130px;
+    }
+
+    .vault:before{
+        inset:15px;
+    }
+
+    .page-title{
+        font-size:17px;
     }
 }
 </style>
 </head>
 
+
 <body>
 
 <!-- ================= NAVBAR ================= -->
 
-<header class="nav">
+<header class="navbar">
 
-    <div class="nav-inner">
+<div class="nav-inner">
 
-        <a href="/" class="logo">
-            RHOOD<span>VAULT</span>
-        </a>
+<div
+class="logo"
+onclick="go('home')">
+RHOOD<span>VAULT</span>
+</div>
 
-        <!-- MOBILE MENU BUTTON -->
 
-        <button
-            class="btn menu-btn"
-            id="menuBtn"
-            type="button">
-            MENU
-        </button>
+<button
+class="btn menu-btn"
+id="menuBtn">
+MENU
+</button>
 
-        <!-- NAVIGATION -->
 
-        <nav class="nav-links" id="navLinks">
+<nav
+class="nav-links"
+id="navLinks">
 
-            <a href="/">HOME</a>
+<a onclick="go('home')">HOME</a>
 
-            <a href="/collection/">COLLECTION</a>
+<a onclick="go('collection')">
+COLLECTION
+</a>
 
-            <a href="/mint/">MINT</a>
+<a onclick="go('mint')">
+MINT
+</a>
 
-            <a href="/vault/">MY VAULT</a>
+<a onclick="go('vault')">
+MY VAULT
+</a>
 
-            <a href="/quests/">QUESTS</a>
+<a onclick="go('quests')">
+QUESTS
+</a>
 
-            <a href="/rewards/">REWARDS</a>
+<a onclick="go('rewards')">
+REWARDS
+</a>
 
-            <a href="/leaderboard/">LEADERBOARD</a>
+<a onclick="go('leaderboard')">
+LEADERBOARD
+</a>
 
-            <button
-                class="btn"
-                id="connectBtn"
-                type="button">
-                CONNECT WALLET
-            </button>
+<button
+class="btn"
+id="walletBtn">
+CONNECT WALLET
+</button>
 
-        </nav>
+</nav>
 
-    </div>
+</div>
 
 </header>
 
 
-<!-- ================= HERO ================= -->
+<!-- ================= APP ================= -->
 
-<main>
-
-<section class="hero">
-
-    <div class="hero-glow"></div>
-
-    <div class="hero-content">
-
-        <div class="eyebrow">
-            ROBINHOOD CHAIN • 1,111 VAULTS
-        </div>
-
-        <div class="vault"></div>
-
-        <h1>
-            ENTER THE<br>
-            <span>RHOODVAULT</span>
-        </h1>
-
-        <p>
-            1111 futuristic digital vaults built for
-            collectors, guardians and explorers.
-            Unlock your vault. Complete missions.
-            Level up.
-        </p>
-
-        <div class="hero-buttons">
-
-            <a
-                href="/mint/"
-                class="btn">
-                MINT YOUR VAULT
-            </a>
-
-            <a
-                href="/collection/"
-                class="btn">
-                EXPLORE COLLECTION
-            </a>
-
-        </div>
-
-    </div>
-
-</section>
-
-</main>
+<div id="app"></div>
 
 
 <!-- ================= FOOTER ================= -->
 
-<footer style="
-    border-top:1px solid #123b60;
-    padding:30px 20px;
-    text-align:center;
-    color:#52738d;
-    font-size:11px;
-">
-    RHOODVAULT © 2026
-    <br><br>
-    DIGITAL VAULTS FROM THE FUTURE
+<footer class="footer">
+
+RHOODVAULT © 2026
+
+<br>
+
+DIGITAL VAULTS FROM THE FUTURE
+
 </footer>
 
 
-<!-- ================= JAVASCRIPT ================= -->
+<div
+class="toast"
+id="toast">
+</div>
+
 
 <script>
 
-const menuBtn = document.getElementById("menuBtn");
-const navLinks = document.getElementById("navLinks");
-const connectBtn = document.getElementById("connectBtn");
+/* =========================================
+   STATE
+========================================= */
+
+let state = JSON.parse(
+    localStorage.getItem("rhoodState")
+) || {
+
+    connected:false,
+
+    xp:1250,
+
+    points:680,
+
+    level:7,
+
+    quests:{}
+
+};
 
 
-/* MOBILE MENU */
+function save(){
 
-menuBtn.addEventListener("click", function(){
-
-    navLinks.classList.toggle("active");
-
-});
-
-
-/* CLOSE MENU AFTER CLICK */
-
-document.querySelectorAll(".nav-links a").forEach(function(link){
-
-    link.addEventListener("click", function(){
-
-        navLinks.classList.remove("active");
-
-    });
-
-});
-
-
-/* DEMO WALLET */
-
-let connected =
-    localStorage.getItem("rhoodConnected") === "true";
-
-
-function updateWallet(){
-
-    if(connected){
-
-        connectBtn.textContent = "0x7A3...91F2";
-
-    }else{
-
-        connectBtn.textContent = "CONNECT WALLET";
-
-    }
+    localStorage.setItem(
+        "rhoodState",
+        JSON.stringify(state)
+    );
 
 }
 
 
-connectBtn.addEventListener("click",function(){
+/* =========================================
+   TOAST
+========================================= */
 
-    connected = !connected;
+function toast(message){
 
-    localStorage.setItem(
-        "rhoodConnected",
-        connected
+    const box =
+        document.getElementById("toast");
+
+    box.textContent = message;
+
+    box.style.display = "block";
+
+    setTimeout(function(){
+
+        box.style.display = "none";
+
+    },2200);
+
+}
+
+
+/* =========================================
+   ROUTER
+========================================= */
+
+function getPage(){
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+    return params.get("page") || "home";
+
+}
+
+
+function go(page){
+
+    if(page === "home"){
+
+        history.pushState(
+            {},
+            "",
+            window.location.pathname
+        );
+
+    }else{
+
+        history.pushState(
+            {},
+            "",
+            "?page=" + page
+        );
+
+    }
+
+    render();
+
+    window.scrollTo(0,0);
+
+    closeMenu();
+
+}
+
+
+/* Browser back/forward */
+
+window.addEventListener(
+    "popstate",
+    render
+);
+
+
+/* =========================================
+   MENU
+========================================= */
+
+const menuBtn =
+    document.getElementById("menuBtn");
+
+const navLinks =
+    document.getElementById("navLinks");
+
+
+menuBtn.addEventListener(
+    "click",
+    function(){
+
+        navLinks.classList.toggle(
+            "open"
+        );
+
+    }
+);
+
+
+function closeMenu(){
+
+    navLinks.classList.remove(
+        "open"
     );
 
-    updateWallet();
+}
 
-});
+
+/* =========================================
+   WALLET
+========================================= */
+
+const walletBtn =
+    document.getElementById(
+        "walletBtn"
+    );
+
+
+walletBtn.addEventListener(
+    "click",
+    function(){
+
+        state.connected =
+            !state.connected;
+
+        save();
+
+        updateWallet();
+
+        toast(
+            state.connected
+            ? "Wallet connected — DEMO"
+            : "Wallet disconnected"
+        );
+
+    }
+);
+
+
+function updateWallet(){
+
+    walletBtn.textContent =
+        state.connected
+        ? "0x7A3...91F2"
+        : "CONNECT WALLET";
+
+}
+
+
+/* =========================================
+   HOME
+========================================= */
+
+function home(){
+
+return `
+
+<section class="hero">
+
+<div class="hero-content">
+
+<div class="eyebrow">
+ROBINHOOD CHAIN • 1,111 VAULTS
+</div>
+
+
+<div class="vault"></div>
+
+
+<h1>
+
+ENTER THE<br>
+
+<span>RHOODVAULT</span>
+
+</h1>
+
+
+<p>
+
+1111 futuristic digital vaults built
+for collectors, guardians and explorers.
+Unlock your vault. Complete missions.
+Level up.
+
+</p>
+
+
+<div class="hero-buttons">
+
+<button
+class="btn"
+onclick="go('mint')">
+
+MINT YOUR VAULT
+
+</button>
+
+
+<button
+class="btn"
+onclick="go('collection')">
+
+EXPLORE COLLECTION
+
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+`;
+
+}
+
+
+/* =========================================
+   COLLECTION
+========================================= */
+
+function collection(){
+
+const vaults = [
+
+["027","LEGENDARY","QUANTUM"],
+["091","EPIC","CYBER"],
+["404","RARE","BLACK OPS"],
+["611","COMMON","INDUSTRIAL"],
+["777","EPIC","NEON"],
+["1001","MYTHIC","ROYAL"]
+
+];
+
+return `
+
+<section class="page">
+
+<div class="eyebrow">
+THE COLLECTION
+</div>
+
+<h1 class="page-title">
+1111 DIGITAL VAULTS
+</h1>
+
+<p class="page-description">
+Every vault is a unique identity
+inside the RhoodVault universe.
+</p>
+
+
+<div class="grid">
+
+${vaults.map(v => `
+
+<div class="card">
+
+<div class="mini-vault">
+<div></div>
+</div>
+
+<span class="tag">
+${v[1]}
+</span>
+
+<h3>
+VAULT #${v[0]}
+</h3>
+
+<p>
+TYPE: ${v[2]}
+</p>
+
+</div>
+
+`).join("")}
+
+</div>
+
+</section>
+
+`;
+
+}
+
+
+/* =========================================
+   MINT
+========================================= */
+
+function mint(){
+
+return `
+
+<section class="page">
+
+<div class="eyebrow">
+SECURE YOUR ACCESS
+</div>
+
+<h1 class="page-title">
+MINT A VAULT
+</h1>
+
+<p class="page-description">
+Secure your place inside the RhoodVault
+universe.
+</p>
+
+
+<div class="grid">
+
+<div class="card">
+
+<div class="mini-vault"
+style="height:300px">
+
+<div style="
+width:160px;
+height:160px;
+"></div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<span class="tag">
+MINT STATUS
+</span>
+
+<h3>
+1,111 VAULTS
+</h3>
+
+<p>
+The real ERC-721 mint contract can be
+connected here later.
+</p>
+
+
+<div class="stats">
+
+<div class="stat">
+<b>1,111</b>
+<small>SUPPLY</small>
+</div>
+
+<div class="stat">
+<b>ERC721</b>
+<small>STANDARD</small>
+</div>
+
+<div class="stat">
+<b>RHC</b>
+<small>NETWORK</small>
+</div>
+
+</div>
+
+<br>
+
+<button
+class="btn"
+onclick="connectMint()">
+
+CONNECT WALLET
+
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+`;
+
+}
+
+
+function connectMint(){
+
+if(!state.connected){
+
+state.connected=true;
+
+save();
+
+updateWallet();
+
+toast(
+"Wallet connected — DEMO"
+);
+
+}else{
+
+toast(
+"Mint contract will be connected later"
+);
+
+}
+
+}
+
+
+/* =========================================
+   VAULT
+========================================= */
+
+function vaultPage(){
+
+return `
+
+<section class="page">
+
+<div class="eyebrow">
+PERSONAL COMMAND CENTER
+</div>
+
+<h1 class="page-title">
+MY VAULT
+</h1>
+
+<p class="page-description">
+Your personal progression,
+security and rewards.
+</p>
+
+
+<div class="grid">
+
+<div class="card">
+
+<div class="mini-vault"
+style="height:280px">
+
+<div></div>
+
+</div>
+
+<span class="tag">
+LEGENDARY
+</span>
+
+<h3>
+VAULT #027
+</h3>
+
+
+<div class="stats">
+
+<div class="stat">
+
+<b>
+${state.level}
+</b>
+
+<small>
+LEVEL
+</small>
+
+</div>
+
+
+<div class="stat">
+
+<b>
+${state.xp.toLocaleString()}
+</b>
+
+<small>
+XP
+</small>
+
+</div>
+
+
+<div class="stat">
+
+<b>
+${state.points.toLocaleString()}
+</b>
+
+<small>
+POINTS
+</small>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<span class="tag">
+SECURITY CORE
+</span>
+
+<h3>
+VAULT STATUS
+</h3>
+
+
+<p>
+SECURITY
+</p>
+
+<div class="progress">
+<span style="width:92%">
+</span>
+</div>
+
+
+<p>
+ENERGY
+</p>
+
+<div class="progress">
+<span style="width:78%">
+</span>
+</div>
+
+
+<p>
+STORAGE
+</p>
+
+<div class="progress">
+<span style="width:64%">
+</span>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+`;
+
+}
+
+
+/* =========================================
+   QUESTS
+========================================= */
+
+function quests(){
+
+const q = [
+
+["daily","DAILY VAULT CHECK",20,10],
+
+["guardian","VAULT GUARDIAN",150,75],
+
+["community","COMMUNITY MISSION",100,50]
+
+];
+
+return `
+
+<section class="page">
+
+<div class="eyebrow">
+PROGRESSION SYSTEM
+</div>
+
+<h1 class="page-title">
+VAULT QUESTS
+</h1>
+
+<p class="page-description">
+Complete missions and earn XP + points.
+</p>
+
+
+<div class="grid">
+
+${q.map(item => `
+
+<div class="card">
+
+<span class="tag">
+QUEST
+</span>
+
+<h3>
+${item[1]}
+</h3>
+
+<p>
+Complete this mission to
+increase your vault progression.
+</p>
+
+<br>
+
+<p>
++${item[2]} XP
+<br>
++${item[3]} POINTS
+</p>
+
+<br>
+
+<button
+class="btn"
+onclick="completeQuest(
+'${item[0]}',
+${item[2]},
+${item[3]}
+)">
+
+${
+state.quests[item[0]]
+? "COMPLETED"
+: "COMPLETE"
+}
+
+</button>
+
+</div>
+
+`).join("")}
+
+</div>
+
+</section>
+
+`;
+
+}
+
+
+function completeQuest(id,xp,points){
+
+if(state.quests[id]){
+
+toast("Quest already completed");
+
+return;
+
+}
+
+state.quests[id]=true;
+
+state.xp += xp;
+
+state.points += points;
+
+state.level =
+Math.floor(state.xp / 180)+1;
+
+save();
+
+toast(
+"Quest completed! +" +
+xp +
+" XP / +" +
+points +
+" Points"
+);
+
+render();
+
+}
+
+
+/* =========================================
+   REWARDS
+========================================= */
+
+function rewards(){
+
+const rewards = [
+
+["Vault Badge",500],
+
+["OG Guardian Badge",1000],
+
+["Mystery Skin",2500],
+
+["Future Mint Access",10000]
+
+];
+
+return `
+
+<section class="page">
+
+<div class="eyebrow">
+REWARD TERMINAL
+</div>
+
+<h1 class="page-title">
+REDEEM POINTS
+</h1>
+
+<p class="page-description">
+Available points:
+<strong style="color:#58ddff">
+${state.points}
+</strong>
+</p>
+
+
+<div class="grid">
+
+${rewards.map(r => `
+
+<div class="card">
+
+<span class="tag">
+${r[1]} POINTS
+</span>
+
+<h3>
+${r[0]}
+</h3>
+
+<p>
+Unlock this digital reward
+with your earned points.
+</p>
+
+<br>
+
+<button
+class="btn"
+onclick="claimReward(
+${r[1]},
+'${r[0]}'
+)">
+
+CLAIM
+
+</button>
+
+</div>
+
+`).join("")}
+
+</div>
+
+</section>
+
+`;
+
+}
+
+
+function claimReward(cost,name){
+
+if(state.points < cost){
+
+toast("Not enough points");
+
+return;
+
+}
+
+state.points -= cost;
+
+save();
+
+toast(
+name + " claimed — DEMO"
+);
+
+render();
+
+}
+
+
+/* =========================================
+   LEADERBOARD
+========================================= */
+
+function leaderboard(){
+
+return `
+
+<section class="page">
+
+<div class="eyebrow">
+GLOBAL RANKING
+</div>
+
+<h1 class="page-title">
+LEADERBOARD
+</h1>
+
+<p class="page-description">
+Top guardians by XP.
+</p>
+
+
+<div class="card table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+RANK
+</th>
+
+<th>
+GUARDIAN
+</th>
+
+<th>
+VAULT
+</th>
+
+<th>
+LEVEL
+</th>
+
+<th>
+XP
+</th>
+
+</tr>
+
+</thead>
+
+
+<tbody>
+
+<tr>
+<td>#01</td>
+<td>0xA91...E21</td>
+<td>#777</td>
+<td>24</td>
+<td>4,820</td>
+</tr>
+
+<tr>
+<td>#02</td>
+<td>0x31B...9C4</td>
+<td>#404</td>
+<td>21</td>
+<td>4,110</td>
+</tr>
+
+<tr>
+<td>#03</td>
+<td>0xF72...8AA</td>
+<td>#1001</td>
+<td>20</td>
+<td>3,940</td>
+</tr>
+
+<tr>
+<td>#04</td>
+<td>0x7A3...91F2</td>
+<td>#027</td>
+<td>${state.level}</td>
+<td>${state.xp.toLocaleString()}</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+`;
+
+}
+
+
+/* =========================================
+   RENDER
+========================================= */
+
+function render(){
+
+const page=getPage();
+
+let content;
+
+switch(page){
+
+case "collection":
+content=collection();
+break;
+
+case "mint":
+content=mint();
+break;
+
+case "vault":
+content=vaultPage();
+break;
+
+case "quests":
+content=quests();
+break;
+
+case "rewards":
+content=rewards();
+break;
+
+case "leaderboard":
+content=leaderboard();
+break;
+
+default:
+content=home();
+
+}
+
+
+document.getElementById(
+"app"
+).innerHTML=content;
 
 
 updateWallet();
+
+
+/* active menu */
+
+document
+.querySelectorAll(".nav-links a")
+.forEach(a=>{
+    a.classList.remove("active");
+});
+
+
+}
+
+
+/* START */
+
+render();
 
 </script>
 
