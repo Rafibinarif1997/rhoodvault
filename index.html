@@ -1,43 +1,704 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Home — RHOODVAULT</title><style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#020814">
+
+<title>RHOODVAULT</title>
+
+<style>
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-:root{--bg:#030812;--panel:#071426;--panel2:#0a1b32;--blue:#19a9ff;--blue2:#006eff;--cyan:#58d7ff;--text:#e8f7ff;--muted:#6f94b0;--line:#123b60;--glow:0 0 18px #008cff66}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 50% 0,#08264b 0,#030812 42%,#01040a 100%);color:var(--text);font-family:Arial,sans-serif;min-height:100vh}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.18;background-image:linear-gradient(#0b5a9030 1px,transparent 1px),linear-gradient(90deg,#0b5a9030 1px,transparent 1px);background-size:32px 32px;mask-image:linear-gradient(to bottom,#000,transparent 80%)}
-a{color:inherit;text-decoration:none}.wrap{max-width:1180px;margin:auto;padding:0 22px}
-.nav{position:sticky;top:0;z-index:20;background:#020711dd;border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
-.navin{height:76px;display:flex;align-items:center;justify-content:space-between;gap:20px}.logo{font-family:'Press Start 2P',monospace;font-size:17px;color:white;text-shadow:0 0 12px #08f}.logo span{color:var(--blue)}
-.links{display:flex;gap:20px;align-items:center}.links a{font-size:11px;color:#9dbbd0;letter-spacing:1px}.links a:hover,.links a.active{color:var(--cyan);text-shadow:0 0 10px #09f}
-.btn{display:inline-flex;align-items:center;justify-content:center;border:1px solid #1e8ed1;background:linear-gradient(180deg,#0d78bd,#06487d);color:#fff;padding:14px 18px;font-family:'Press Start 2P',monospace;font-size:9px;cursor:pointer;box-shadow:inset 0 0 0 1px #5bcfff22,var(--glow);clip-path:polygon(5px 0,calc(100% - 5px) 0,100% 5px,100% calc(100% - 5px),calc(100% - 5px) 100%,5px 100%,0 calc(100% - 5px),0 5px);transition:.2s}.btn:hover{transform:translateY(-2px);filter:brightness(1.25)}
-.hero{min-height:calc(100vh - 76px);display:grid;place-items:center;text-align:center;position:relative;overflow:hidden}.hero:after{content:"";position:absolute;width:600px;height:600px;border-radius:50%;background:#008cff18;filter:blur(80px);animation:pulse 4s infinite}
-@keyframes pulse{50%{transform:scale(1.15);opacity:.55}}@keyframes float{50%{transform:translateY(-12px)}}@keyframes scan{to{background-position:0 100%}}
-.pixel{font-family:'Press Start 2P',monospace}.eyebrow{color:var(--cyan);font:9px 'Press Start 2P';letter-spacing:2px}.hero h1{font:clamp(35px,7vw,78px) 'Press Start 2P';line-height:1.15;margin:22px 0;text-shadow:0 0 8px #008cff,0 0 28px #0077ff55}.hero p{max-width:700px;margin:0 auto 28px;color:#8eafc5;line-height:1.8}.actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}.ghost{background:#071526}
-.page{padding:72px 0}.pagehead{margin-bottom:36px}.pagehead h1{font:24px 'Press Start 2P';margin:12px 0}.pagehead p{color:var(--muted)}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.card{background:linear-gradient(145deg,#081a2fdd,#040c17dd);border:1px solid var(--line);padding:22px;position:relative;overflow:hidden;box-shadow:0 0 0 1px #008cff0a}.card:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 5px,#0b9fff08 6px 7px);pointer-events:none}.card:hover{border-color:#187bb4;box-shadow:var(--glow)}
-.vault-art{height:260px;display:grid;place-items:center;background:radial-gradient(circle,#0b4b82,#061525 55%,#020812);position:relative;overflow:hidden}.vault-door{width:170px;height:170px;border:12px solid #168fd1;border-radius:50%;box-shadow:0 0 0 7px #082d4c,0 0 35px #008cff88,inset 0 0 30px #008cff66;position:relative;animation:float 4s ease-in-out infinite}.vault-door:before{content:"";position:absolute;inset:24px;border:4px dashed #57d9ff; border-radius:50%;animation:spin 9s linear infinite}.vault-door:after{content:"";position:absolute;left:50%;top:50%;width:8px;height:60px;background:#69ddff;transform:translate(-50%,-50%);box-shadow:0 0 18px #0af}@keyframes spin{to{transform:rotate(360deg)}}
-.tag{display:inline-block;font:8px 'Press Start 2P';color:var(--cyan);border:1px solid #12527c;padding:7px;margin-bottom:12px}.card h3{font:13px 'Press Start 2P';margin:7px 0 12px}.meta{display:flex;justify-content:space-between;color:#7298b1;font-size:12px}.statgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.stat{border:1px solid var(--line);padding:18px;background:#061120}.stat b{display:block;font:16px 'Press Start 2P';color:var(--cyan);margin-bottom:9px}.stat small{color:var(--muted)}
-.progress{height:10px;background:#020811;border:1px solid var(--line);margin:14px 0;overflow:hidden}.progress i{display:block;height:100%;background:linear-gradient(90deg,#006eff,#4ee5ff);box-shadow:0 0 15px #08f;animation:scan 2s linear infinite}
-.table{width:100%;border-collapse:collapse}.table th,.table td{text-align:left;padding:16px;border-bottom:1px solid var(--line);font-size:12px}.table th{color:var(--cyan);font:9px 'Press Start 2P'}
-.notice{border:1px solid #12527c;background:#06182a;padding:18px;color:#8fb4cb;margin-bottom:20px}
-.footer{border-top:1px solid var(--line);padding:35px 0;color:#55758c;text-align:center;font-size:11px}
-.mobile{display:none}.toast{position:fixed;right:20px;bottom:20px;background:#06213a;border:1px solid #168fd1;padding:15px 18px;z-index:50;box-shadow:var(--glow);font-size:12px;display:none}
-@media(max-width:800px){.links{display:none}.mobile{display:block}.grid{grid-template-columns:1fr}.statgrid{grid-template-columns:1fr 1fr}.navin{height:68px}.hero{min-height:calc(100vh - 68px)}.page{padding:50px 0}.logo{font-size:13px}}
-</style></head><body>
-<header class="nav"><div class="wrap navin"><a class="logo" href="/">RHOOD<span>VAULT</span></a><nav class="links"><a href="/" class="active">HOME</a><a href="/collection">COLLECTION</a><a href="/mint">MINT</a><a href="/vault">MY VAULT</a><a href="/quests">QUESTS</a><a href="/rewards">REWARDS</a><a href="/leaderboard">LEADERBOARD</a><button class="btn" data-connect>CONNECT WALLET</button></nav><button class="btn mobile">MENU</button></div></header>
-<main><section class="hero"><div class="wrap"><div class="eyebrow">ROBINHOOD CHAIN • 1,111 VAULTS</div><h1>ENTER THE<br><span style="color:#27baff">RHOODVAULT</span></h1><p>1111 futuristic digital vaults built for collectors, guardians and explorers. Unlock your vault. Complete missions. Level up.</p><div class="actions"><a class="btn" href="/mint">MINT YOUR VAULT</a><a class="btn ghost" href="/collection">EXPLORE COLLECTION</a></div></div></section></main><footer class="footer">RHOODVAULT © 2026 · DIGITAL VAULTS FROM THE FUTURE</footer><div class="toast"></div><script>
-const state=JSON.parse(localStorage.getItem("rhoodVaultState")||'{"connected":false,"xp":1250,"points":680,"level":7,"quests":{}}');
-function save(){localStorage.setItem("rhoodVaultState",JSON.stringify(state))}
-function toast(t){const x=document.querySelector(".toast");if(!x)return;x.textContent=t;x.style.display="block";setTimeout(()=>x.style.display="none",2200)}
-function connect(){state.connected=!state.connected;save();document.querySelectorAll("[data-connect]").forEach(x=>x.textContent=state.connected?"0x7A3...91F2":"CONNECT WALLET");toast(state.connected?"Wallet connected (demo)":"Wallet disconnected")}
-function quest(id,xp,pts){if(state.quests[id])return toast("Quest already completed");state.quests[id]=1;state.xp+=xp;state.points+=pts;state.level=Math.floor(state.xp/180)+1;save();location.reload()}
-function claim(cost,name){if(state.points<cost)return toast("Not enough points");state.points-=cost;save();toast(name+" claimed (demo)")}
-document.addEventListener("DOMContentLoaded",()=>{
-document.querySelectorAll("[data-connect]").forEach(x=>x.addEventListener("click",connect));
-document.querySelectorAll("[data-quest]").forEach(x=>x.addEventListener("click",()=>{let [id,x,p]=x.dataset.quest.split("|");quest(id,+x,+p)}));
-document.querySelectorAll("[data-claim]").forEach(x=>x.addEventListener("click",()=>{let [c,n]=x.dataset.claim.split("|");claim(+c,n)}));
-document.querySelectorAll("[data-xp]").forEach(x=>x.textContent=state.xp.toLocaleString());
-document.querySelectorAll("[data-points]").forEach(x=>x.textContent=state.points.toLocaleString());
-document.querySelectorAll("[data-level]").forEach(x=>x.textContent=state.level);
-document.querySelectorAll("[data-connect]").forEach(x=>x.textContent=state.connected?"0x7A3...91F2":"CONNECT WALLET");
-document.querySelectorAll(".mobile").forEach(x=>x.onclick=()=>document.querySelector(".links").classList.toggle("show"));
+
+:root{
+    --bg:#020711;
+    --panel:#061426;
+    --panel2:#091d35;
+    --blue:#159cff;
+    --blue2:#006cff;
+    --cyan:#61dcff;
+    --white:#ecf9ff;
+    --muted:#7698b3;
+    --line:#123b60;
+    --glow:0 0 25px rgba(0,150,255,.45);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:
+        radial-gradient(circle at 50% -10%,#0b3768 0%,#041225 30%,#020711 70%);
+    color:var(--white);
+    font-family:Arial,sans-serif;
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+/* PIXEL GRID */
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-2;
+    pointer-events:none;
+    background-image:
+        linear-gradient(rgba(0,145,255,.07) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(0,145,255,.07) 1px,transparent 1px);
+    background-size:32px 32px;
+}
+
+/* SCANLINES */
+body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:100;
+    pointer-events:none;
+    opacity:.08;
+    background:
+        repeating-linear-gradient(
+            0deg,
+            transparent 0px,
+            transparent 3px,
+            #42caff 4px
+        );
+}
+
+/* ================= NAVBAR ================= */
+
+.nav{
+    position:sticky;
+    top:0;
+    z-index:999;
+    width:100%;
+    background:rgba(2,7,17,.92);
+    border-bottom:1px solid #124a76;
+    backdrop-filter:blur(15px);
+}
+
+.nav-inner{
+    max-width:1200px;
+    height:76px;
+    margin:auto;
+    padding:0 24px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+}
+
+.logo{
+    color:white;
+    text-decoration:none;
+    font-family:'Press Start 2P',monospace;
+    font-size:16px;
+    white-space:nowrap;
+    text-shadow:
+        0 0 5px #fff,
+        0 0 15px #009dff;
+}
+
+.logo span{
+    color:var(--blue);
+}
+
+/* DESKTOP MENU */
+
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:22px;
+}
+
+.nav-links a{
+    color:#8eafc5;
+    text-decoration:none;
+    font-family:'Press Start 2P',monospace;
+    font-size:8px;
+    transition:.2s;
+}
+
+.nav-links a:hover{
+    color:var(--cyan);
+    text-shadow:0 0 12px #00aaff;
+}
+
+/* BUTTON */
+
+.btn{
+    border:1px solid #159cff;
+    background:linear-gradient(
+        180deg,
+        #0879c4,
+        #034477
+    );
+
+    color:white;
+    padding:14px 18px;
+
+    font-family:'Press Start 2P',monospace;
+    font-size:8px;
+
+    cursor:pointer;
+
+    clip-path:polygon(
+        5px 0,
+        calc(100% - 5px) 0,
+        100% 5px,
+        100% calc(100% - 5px),
+        calc(100% - 5px) 100%,
+        5px 100%,
+        0 calc(100% - 5px),
+        0 5px
+    );
+
+    box-shadow:
+        inset 0 0 12px rgba(100,220,255,.15),
+        0 0 15px rgba(0,130,255,.25);
+
+    transition:.2s;
+}
+
+.btn:hover{
+    transform:translateY(-2px);
+    box-shadow:
+        0 0 20px rgba(0,160,255,.65);
+}
+
+/* MOBILE MENU BUTTON */
+
+.menu-btn{
+    display:none;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+    min-height:calc(100vh - 76px);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    position:relative;
+
+    padding:80px 20px;
+
+    overflow:hidden;
+}
+
+.hero-glow{
+    position:absolute;
+
+    width:500px;
+    height:500px;
+
+    border-radius:50%;
+
+    background:#008cff22;
+
+    filter:blur(70px);
+
+    animation:heroPulse 4s infinite;
+}
+
+@keyframes heroPulse{
+    0%,100%{
+        transform:scale(1);
+        opacity:.5;
+    }
+
+    50%{
+        transform:scale(1.25);
+        opacity:.8;
+    }
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+    max-width:900px;
+}
+
+.eyebrow{
+    font-family:'Press Start 2P',monospace;
+    font-size:9px;
+    color:var(--cyan);
+    letter-spacing:2px;
+    margin-bottom:25px;
+}
+
+.hero h1{
+    font-family:'Press Start 2P',monospace;
+
+    font-size:clamp(32px,7vw,76px);
+
+    line-height:1.25;
+
+    margin-bottom:30px;
+
+    text-shadow:
+        0 0 7px #fff,
+        0 0 25px #008cff;
+}
+
+.hero h1 span{
+    color:#23b5ff;
+}
+
+.hero p{
+    max-width:720px;
+    margin:0 auto 35px;
+
+    color:#8aaec7;
+
+    line-height:1.9;
+
+    font-size:16px;
+}
+
+.hero-buttons{
+    display:flex;
+    justify-content:center;
+    gap:14px;
+    flex-wrap:wrap;
+}
+
+/* ================= PIXEL VAULT ================= */
+
+.vault{
+    width:220px;
+    height:220px;
+
+    margin:50px auto;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    position:relative;
+
+    background:
+        linear-gradient(135deg,#0b3153,#041321);
+
+    border:5px solid #128fe0;
+
+    box-shadow:
+        0 0 0 8px #06223b,
+        0 0 0 12px #0a527f,
+        0 0 50px #008cff88;
+
+    animation:vaultFloat 4s ease-in-out infinite;
+}
+
+.vault::before{
+    content:"";
+
+    position:absolute;
+    inset:22px;
+
+    border:4px dashed #58d8ff;
+
+    animation:spin 8s linear infinite;
+}
+
+.vault::after{
+    content:"";
+
+    width:30px;
+    height:70px;
+
+    background:#53d9ff;
+
+    box-shadow:
+        0 0 20px #00aaff,
+        0 0 50px #008cff;
+
+    clip-path:polygon(
+        35% 0,
+        65% 0,
+        65% 45%,
+        100% 45%,
+        100% 60%,
+        65% 60%,
+        65% 100%,
+        35% 100%,
+        35% 60%,
+        0 60%,
+        0 45%,
+        35% 45%
+    );
+}
+
+@keyframes vaultFloat{
+    0%,100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-12px);
+    }
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:900px){
+
+    .nav-inner{
+        height:68px;
+        padding:0 16px;
+    }
+
+    .logo{
+        font-size:12px;
+    }
+
+    .menu-btn{
+        display:block;
+        padding:12px 14px;
+    }
+
+    .nav-links{
+        position:absolute;
+
+        top:68px;
+        left:0;
+        right:0;
+
+        width:100%;
+
+        display:none;
+
+        flex-direction:column;
+        align-items:stretch;
+
+        gap:0;
+
+        background:
+            linear-gradient(
+                180deg,
+                #061526,
+                #020711
+            );
+
+        border-bottom:1px solid #123b60;
+
+        padding:10px 16px 18px;
+
+        box-shadow:0 20px 40px rgba(0,0,0,.5);
+    }
+
+    .nav-links.active{
+        display:flex;
+        animation:menuOpen .2s ease;
+    }
+
+    @keyframes menuOpen{
+        from{
+            opacity:0;
+            transform:translateY(-10px);
+        }
+
+        to{
+            opacity:1;
+            transform:translateY(0);
+        }
+    }
+
+    .nav-links a{
+        width:100%;
+
+        padding:18px 12px;
+
+        border-bottom:1px solid #10334f;
+
+        font-size:9px;
+    }
+
+    .nav-links .btn{
+        width:100%;
+        margin-top:12px;
+    }
+
+    .hero{
+        min-height:calc(100vh - 68px);
+        padding:55px 18px;
+    }
+
+    .eyebrow{
+        font-size:7px;
+        line-height:1.7;
+    }
+
+    .hero h1{
+        font-size:clamp(25px,9vw,45px);
+    }
+
+    .hero p{
+        font-size:14px;
+        line-height:1.8;
+    }
+
+    .hero-buttons{
+        flex-direction:column;
+        width:100%;
+        max-width:360px;
+        margin:auto;
+    }
+
+    .hero-buttons .btn{
+        width:100%;
+    }
+
+    .vault{
+        width:170px;
+        height:170px;
+        margin:35px auto;
+    }
+
+    .vault::before{
+        inset:17px;
+    }
+
+    .vault::after{
+        height:52px;
+        width:24px;
+    }
+}
+
+/* SMALL PHONES */
+
+@media(max-width:420px){
+
+    .logo{
+        font-size:10px;
+    }
+
+    .hero{
+        padding:45px 15px;
+    }
+
+    .hero h1{
+        font-size:24px;
+    }
+
+    .hero p{
+        font-size:13px;
+    }
+
+    .vault{
+        width:145px;
+        height:145px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<header class="nav">
+
+    <div class="nav-inner">
+
+        <a href="/" class="logo">
+            RHOOD<span>VAULT</span>
+        </a>
+
+        <!-- MOBILE MENU BUTTON -->
+
+        <button
+            class="btn menu-btn"
+            id="menuBtn"
+            type="button">
+            MENU
+        </button>
+
+        <!-- NAVIGATION -->
+
+        <nav class="nav-links" id="navLinks">
+
+            <a href="/">HOME</a>
+
+            <a href="/collection/">COLLECTION</a>
+
+            <a href="/mint/">MINT</a>
+
+            <a href="/vault/">MY VAULT</a>
+
+            <a href="/quests/">QUESTS</a>
+
+            <a href="/rewards/">REWARDS</a>
+
+            <a href="/leaderboard/">LEADERBOARD</a>
+
+            <button
+                class="btn"
+                id="connectBtn"
+                type="button">
+                CONNECT WALLET
+            </button>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<!-- ================= HERO ================= -->
+
+<main>
+
+<section class="hero">
+
+    <div class="hero-glow"></div>
+
+    <div class="hero-content">
+
+        <div class="eyebrow">
+            ROBINHOOD CHAIN • 1,111 VAULTS
+        </div>
+
+        <div class="vault"></div>
+
+        <h1>
+            ENTER THE<br>
+            <span>RHOODVAULT</span>
+        </h1>
+
+        <p>
+            1111 futuristic digital vaults built for
+            collectors, guardians and explorers.
+            Unlock your vault. Complete missions.
+            Level up.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a
+                href="/mint/"
+                class="btn">
+                MINT YOUR VAULT
+            </a>
+
+            <a
+                href="/collection/"
+                class="btn">
+                EXPLORE COLLECTION
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer style="
+    border-top:1px solid #123b60;
+    padding:30px 20px;
+    text-align:center;
+    color:#52738d;
+    font-size:11px;
+">
+    RHOODVAULT © 2026
+    <br><br>
+    DIGITAL VAULTS FROM THE FUTURE
+</footer>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+const menuBtn = document.getElementById("menuBtn");
+const navLinks = document.getElementById("navLinks");
+const connectBtn = document.getElementById("connectBtn");
+
+
+/* MOBILE MENU */
+
+menuBtn.addEventListener("click", function(){
+
+    navLinks.classList.toggle("active");
+
 });
-</script></body></html>
+
+
+/* CLOSE MENU AFTER CLICK */
+
+document.querySelectorAll(".nav-links a").forEach(function(link){
+
+    link.addEventListener("click", function(){
+
+        navLinks.classList.remove("active");
+
+    });
+
+});
+
+
+/* DEMO WALLET */
+
+let connected =
+    localStorage.getItem("rhoodConnected") === "true";
+
+
+function updateWallet(){
+
+    if(connected){
+
+        connectBtn.textContent = "0x7A3...91F2";
+
+    }else{
+
+        connectBtn.textContent = "CONNECT WALLET";
+
+    }
+
+}
+
+
+connectBtn.addEventListener("click",function(){
+
+    connected = !connected;
+
+    localStorage.setItem(
+        "rhoodConnected",
+        connected
+    );
+
+    updateWallet();
+
+});
+
+
+updateWallet();
+
+</script>
+
+</body>
+</html>
