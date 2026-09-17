@@ -683,6 +683,7 @@ td{
     }
 }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.15.0/dist/ethers.umd.min.js"></script>
 </head>
 
 
@@ -916,44 +917,317 @@ function closeMenu(){
 
 
 /* =========================================
-   WALLET
+   REAL WALLET
 ========================================= */
 
-const walletBtn =
-    document.getElementById(
-        "walletBtn"
-    );
+const RH_CHAIN_ID = 4663;
+
+const RH_NETWORK = {
+    chainId: "0x1237",
+    chainName: "Robinhood Chain",
+
+    nativeCurrency: {
+        name: "Ether",
+        symbol: "ETH",
+        decimals: 18
+    },
+
+    rpcUrls: [
+        "https://rpc.mainnet.chain.robinhood.com"
+    ],
+
+    blockExplorerUrls: [
+        "https://robinhoodchain.blockscout.com"
+    ]
+};
+
+let walletAddress = null;
+let walletProvider = null;
+let walletSigner = null;
 
 
-walletBtn.addEventListener(
-    "click",
-    function(){
+/* CONNECT */
 
-        state.connected =
-            !state.connected;
+async function connectWallet(){
+
+    if(!window.ethereum){
+
+        toast("Please open RHOODVAULT in an EVM wallet");
+
+        return;
+    }
+
+    try{
+
+        const accounts =
+            await window.ethereum.request({
+                method:"eth_requestAccounts"
+            });
+
+        if(!accounts.length) return;
+
+        walletProvider =
+            new ethers.BrowserProvider(
+                window.ethereum
+            );
+
+        let network =
+            await walletProvider.getNetwork();
+
+        /* Switch to Robinhood Chain */
+
+        if(
+            Number(network.chainId) !==
+            RH_CHAIN_ID
+        ){
+
+            try{
+
+                await window.ethereum.request({
+                    method:
+                    "wallet_switchEthereumChain",
+
+                    params:[
+                        {
+                            chainId:
+                            RH_NETWORK.chainId
+                        }
+                    ]
+                });
+
+            }catch(error){
+
+                /* Add Robinhood Chain */
+
+                if(error.code === 4902){
+
+                    await window.ethereum.request({
+                        method:
+                        "wallet_addEthereumChain",
+
+                        params:[
+                            RH_NETWORK
+                        ]
+                    });
+
+                }else{
+
+                    throw error;
+
+                }
+
+            }
+
+            walletProvider =
+                new ethers.BrowserProvider(
+                    window.ethereum
+                );
+        }
+
+
+        walletSigner =
+            await walletProvider.getSigner();
+
+        walletAddress =
+            await walletSigner.getAddress();
+
+
+        state.connected = true;
+
+        state.wallet =
+            walletAddress;
 
         save();
 
         updateWallet();
 
         toast(
-            state.connected
-            ? "Wallet connected — DEMO"
-            : "Wallet disconnected"
+            "Wallet connected"
+        );
+
+        renderVaultWallet();
+
+    }catch(error){
+
+        console.error(error);
+
+        toast(
+            "Wallet connection failed"
         );
 
     }
-);
 
+}
+
+
+/* DISCONNECT */
+
+function disconnectWallet(){
+
+    walletAddress = null;
+
+    walletProvider = null;
+
+    walletSigner = null;
+
+    state.connected = false;
+
+    state.wallet = null;
+
+    save();
+
+    updateWallet();
+
+    toast(
+        "Wallet disconnected"
+    );
+
+}
+
+
+/* WALLET BUTTON */
+
+walletBtn.onclick = async function(){
+
+    if(walletAddress){
+
+        disconnectWallet();
+
+    }else{
+
+        await connectWallet();
+
+    }
+
+};
+
+
+/* UPDATE BUTTON */
 
 function updateWallet(){
 
-    walletBtn.textContent =
-        state.connected
-        ? "0x7A3...91F2"
-        : "CONNECT WALLET";
+    if(walletAddress){
+
+        walletBtn.textContent =
+            walletAddress.slice(0,6) +
+            "..." +
+            walletAddress.slice(-4);
+
+    }else{
+
+        walletBtn.textContent =
+            "CONNECT WALLET";
+
+    }
 
 }
+
+
+/* RESTORE CONNECTION */
+
+async function restoreWallet(){
+
+    if(!window.ethereum) return;
+
+    try{
+
+        const accounts =
+            await window.ethereum.request({
+                method:"eth_accounts"
+            });
+
+        if(
+            accounts &&
+            accounts.length
+        ){
+
+            walletProvider =
+                new ethers.BrowserProvider(
+                    window.ethereum
+                );
+
+            const network =
+                await walletProvider.getNetwork();
+
+            if(
+                Number(network.chainId) ===
+                RH_CHAIN_ID
+            ){
+
+                walletSigner =
+                    await walletProvider.getSigner();
+
+                walletAddress =
+                    accounts[0];
+
+                state.connected = true;
+
+                state.wallet =
+                    walletAddress;
+
+                save();
+
+            }
+
+        }
+
+    }catch(error){
+
+        console.log(
+            "Wallet restore:",
+            error
+        );
+
+    }
+
+    updateWallet();
+
+}
+
+
+/* ACCOUNT CHANGE */
+
+if(window.ethereum){
+
+    window.ethereum.on(
+        "accountsChanged",
+        function(accounts){
+
+            if(!accounts.length){
+
+                disconnectWallet();
+
+                return;
+
+            }
+
+            walletAddress =
+                accounts[0];
+
+            state.connected = true;
+
+            state.wallet =
+                walletAddress;
+
+            save();
+
+            updateWallet();
+
+        }
+    );
+
+
+    window.ethereum.on(
+        "chainChanged",
+        function(){
+
+            window.location.reload();
+
+        }
+    );
+
+}
+
 
 
 /* =========================================
